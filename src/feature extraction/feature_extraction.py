@@ -11,11 +11,8 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans, DBSCAN, HDBSCAN
 from sklearn.metrics import silhouette_score
 from sklearn.manifold import TSNE
-import umap
 from math import pi
 import pickle
-from factor_analyzer import Rotator
-from factor_analyzer import FactorAnalyzer
 from scipy.stats import f_oneway, shapiro, ttest_ind, mannwhitneyu
 from scipy.signal import butter, filtfilt
 from scipy.signal import welch, correlate
@@ -44,9 +41,10 @@ class feature_ext_analysis:
          distances_ = filtered_signal
          peaks, _ = find_peaks(distances_, distance=5 , height=np.mean(distances_)/2, prominence=np.mean(distances_)/2)
          troughs, _ = find_peaks(-distances_, distance=5, height=-np.mean(distances_), prominence=np.mean(distances_)/2)
-            
+                
          
             
+         #peaks, troughs = self.remove_consecutive_events(distances_, peaks, troughs)
          ############################################################## Compute speed signal
          time_interval = 1 / fps
          speed_signal = np.diff(distances_) / time_interval # Speed = Δdistance / Δtime
@@ -58,7 +56,8 @@ class feature_ext_analysis:
              peaks = peaks[1:]
          
          amplitudes = []
-         
+         amp_frame_numbers = []
+
          for i in range(min(len(peaks), len(troughs))):
              peak = peaks[i]
              valid_troughs = troughs[troughs < peak]
@@ -67,8 +66,10 @@ class feature_ext_analysis:
              last_trough = valid_troughs[-1]
              amp = abs(distances_[peak] - distances_[last_trough])
              amplitudes.append(amp)
-         
-         
+             amp_frame_numbers.append(peak)
+
+
+         amp_frame_numbers = np.array(amp_frame_numbers).reshape(-1, 1)
          # Compute median and max amplitude
          median_amplitude = np.median(amplitudes)
          max_amplitude = np.max(amplitudes)
@@ -78,12 +79,14 @@ class feature_ext_analysis:
          time_points_amp = np.arange(len(amplitudes)).reshape(-1, 1)
          model_amp = LinearRegression()
          model_amp.fit(time_points_amp, amplitudes)
-         amp_slope = model_amp.coef_[0]
+         #model_amp.fit(amp_frame_numbers, amplitudes)
+
+         amp_slope = model_amp.coef_[0]######################################################################################
 
          ################################################################# Generate per-cycle speed 
          per_cycle_speed_maxima = []
          per_cycle_speed_avg = []
-
+         per_cycle_speed_avg_frame_numbers = []
          for i in range(len(amplitudes) - 1):
              start_idx = peaks[i]  # Start of the window
              end_idx = peaks[i + 1]  # End of the window
@@ -92,16 +95,22 @@ class feature_ext_analysis:
              if len(window_speed) > 0:  # Ensure the window is not empty
                  per_cycle_speed_maxima.append(np.percentile(np.abs(window_speed), 95))
                  per_cycle_speed_avg.append(np.mean(np.abs(window_speed)))
+                 # mid-frame to regress the average values (just for viz/trend)
+                 avg_frame = (start_idx + end_idx) // 2
+                 per_cycle_speed_avg_frame_numbers.append(avg_frame)
          
-         # Compute the median and max of per-cycle speed maxima
+            # Compute the median and max of per-cycle speed maxima
          mean_percycle_max_speed = np.mean(per_cycle_speed_maxima)
          mean_percycle_avg_speed = np.mean(per_cycle_speed_avg)
-
+         per_cycle_speed_avg_frame_numbers = np.array(per_cycle_speed_avg_frame_numbers).reshape(-1, 1)
          avg_speed = np.mean(np.abs(speed_signal))
+         
          time_points_speed = np.arange(len(per_cycle_speed_avg)).reshape(-1, 1)
          model_speed = LinearRegression()
          model_speed.fit(time_points_speed, np.abs(per_cycle_speed_avg))
-         speed_slope = model_speed.coef_[0]
+         #model_speed.fit(per_cycle_speed_avg_frame_numbers, np.abs(per_cycle_speed_avg))
+
+         speed_slope = model_speed.coef_[0]#####################################################################################
          # Compute tapping intervals (time between consecutive maxima)
          tapping_intervals = np.diff(peaks) / fps
 
@@ -129,6 +138,11 @@ class feature_ext_analysis:
          mean_first = np.mean(first_half)
          mean_second = np.mean(second_half)
          speed_decrement_ratio = mean_second / mean_first 
+         #############################  new amp ti decrement 
+         
+
+         
+         
 
          
          ####################################################################   hesitation-halts
@@ -162,17 +176,17 @@ class feature_ext_analysis:
         
      
          features = {'avg_amplitude': avg_amplitude,
-                     'mean_percycle_max_speed':mean_percycle_max_speed,
-                     'mean_percycle_avg_speed':mean_percycle_avg_speed,
-                     'mean_tapping_interval':mean_tapping_interval,
+                     'avg_percycle_max_speed':mean_percycle_max_speed,
+                     'avg_percycle_avg_speed':mean_percycle_avg_speed,
+                     'avg_cycle_duration':mean_tapping_interval,
                      'amp_slope':amp_slope, 
-                     'ti_slope':ti_slope,
+                     'cycle_slope':ti_slope,
                      'speed_slope':speed_slope,
-                     'cov_tapping_interval':cov_tapping_interval, 
+                     'cov_cycle_duration':cov_tapping_interval, 
                      'cov_amp':cov_amp, 
-                     'cov_per_cycle_speed_maxima':cov_per_cycle_speed_maxima,
-                     'cov_per_cycle_speed_avg':cov_per_cycle_speed_avg,
-                     'num_interruptions2':num_interruptions2,
+                     'cov_percycle_max_speed':cov_per_cycle_speed_maxima,
+                     'cov_percycle_avg_speed':cov_per_cycle_speed_avg,
+                     'num_interruptions':num_interruptions2,
                      }
 
          feat_name = ['ids', 'video_path', 'label'] + list(features.keys())
