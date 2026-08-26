@@ -26,17 +26,16 @@ Radboud University, Donders Institute for Brain, Cognition and Behaviour
 │ └── 📁 processed/ # Processed CSVs and derived feature files
 │
 ├── 📁 src/
+│ └── 📁 demo/
+│ └── 📄 ft_video_analysis.py # demo: finger tapping video → features → plots
+│ └── 📄 la_video_analysis.py # demo: leg agility video ->  features → plots
 │ ├── 📁 preprocessing/
 │ │ └── 📄 keypoint_extraction.py # Extracts hand keypoints using Mediapipe
 │ ├── 📁 feature_extraction/
 │ │ └── 📄 feature_extraction.py # Computes motor features (amplitude, speed, etc.)
 │ ├── 📁 training/
 │ │ └── 📄 optimization_training.py # Model training and evaluation scripts
-│ └── 📁 demo/
-│ └── 📄 ft_video_analysis.py # demo: video → features → plots
-│ └── 📄 la_video_analysis.py # demo: leg agility video -> features + visualization
-│
-├── 📄 environment.yml # Conda environment setup
+│ ├── 📄 environment.yml # Conda environment setup
 └── 📘 README.md # Project documentation
 ```
 
@@ -105,7 +104,7 @@ Arguments:
 --backend: Pose-estimation backend (yolo or metrabs)
 --save_dir: Optional output directory
     ```
-### 🔹 Part 2: Official Implementation
+### 🔹 Part 2: Official Implementation of MDS-UPDRS classification
 #### 🔹 Keypoint Extraction
 
 If you want to build your own pickle file (`video_keypoints.pkl`) from raw videos, first prepare a CSV file with the following columns:
