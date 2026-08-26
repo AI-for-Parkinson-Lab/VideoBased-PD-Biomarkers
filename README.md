@@ -28,7 +28,7 @@ Radboud University, Donders Institute for Brain, Cognition and Behaviour
 ├── 📁 src/
 │ └── 📁 demo/
 │ └── 📄 ft_video_analysis.py # demo: finger tapping video → features → plots
-│ └── 📄 la_video_analysis.py # demo: leg agility video ->  features → plots
+│ └── 📄 la_video_analysis.py # demo: leg agility video →  features → plots
 │ ├── 📁 preprocessing/
 │ │ └── 📄 keypoint_extraction.py # Extracts hand keypoints using Mediapipe
 │ ├── 📁 feature_extraction/
