@@ -72,7 +72,7 @@ src/demo/ft_video_analysis.py
 
 ▶️ Run the demo
 ```bash
-python ft_video_analysis.py --video_path "C:/Users/Tahereh/video.MP4" --hand2track Right
+python src/demo/ft_video_analysis.py --video_path "src/demo/finger_tapping_test.mp4" --hand2track Right
 ```
 Arguments:
     ```
@@ -89,12 +89,12 @@ src/demo/la_video_analysis.py
 
 Run with YOLO backend
 ```bash
-python src/demo/la_video_analysis.py --video_path "C:/Users/Tahereh/leg_agility_test.mp4" --leg2track Right --backend yolo
+python src/demo/la_video_analysis.py --video_path "src/demo/leg_agility_test.mp4" --leg2track Right --backend yolo
 ```
 
 Run with Metrabs backend
 ```bash
-python src/demo/la_video_analysis.py --video_path "C:/Users/Tahereh/leg_agility_test.mp4" --leg2track Right --backend metrabs
+python src/demo/la_video_analysis.py --video_path "src/demo/leg_agility_test.mp4" --leg2track Right --backend metrabs
 ```
 
 Arguments:
