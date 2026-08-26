@@ -269,4 +269,4 @@ if __name__ == "__main__":
     analyzer = ft_video_analysis(CONFIG)
     analyzer.preprocess_and_display_video()
 
-
+#python ft_video_analysis.py --video_path C:\Users\Z984222\Documents\GitHub\general\finger_tapping_test.mp4 --hand2track Right       

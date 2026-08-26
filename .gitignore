@@ -1,2 +1,6 @@
 __pycache__/
 *.pyc
+src/demo/results/
+src/demo/tfhub_cache/
+src/demo/metrabs_eff2l_y4_384px_800k_28ds*/
+src/demo/yolo11l-pose.pt
