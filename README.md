@@ -34,6 +34,7 @@ Radboud University, Donders Institute for Brain, Cognition and Behaviour
 │ │ └── 📄 optimization_training.py # Model training and evaluation scripts
 │ └── 📁 demo/
 │ └── 📄 ft_video_analysis.py # demo: video → features → plots
+│ └── 📄 la_video_analysis.py # demo: leg agility video -> features + visualization
 │
 ├── 📄 environment.yml # Conda environment setup
 └── 📘 README.md # Project documentation
@@ -53,7 +54,7 @@ cd VideoBased-PD-Biomarkers
 ### Conda
 ```bash
 conda env create -f environment.yml
-conda activate parkinson-digital-biomarkers
+conda activate pd_marker
 ```
 
 ---
@@ -62,6 +63,8 @@ conda activate parkinson-digital-biomarkers
 
 This demo offers a simple end-to-end example that runs the full analysis pipeline — from a raw video to automatic feature extraction and visualization.
 It can be executed locally without any dataset setup or preprocessing steps from the main implementation.
+
+#### Finger Tapping Demo
 
 📁 Script location
     ```
@@ -76,6 +79,31 @@ Arguments:
     ```
 --video_path: Path to the input video file
 --hand2track: Which hand to analyze (Left or Right)
+    ```
+
+#### Leg Agility Demo
+
+Script location
+    ```
+src/demo/la_video_analysis.py
+    ```
+
+Run with YOLO backend
+```bash
+python src/demo/la_video_analysis.py --video_path "C:/Users/Tahereh/leg_agility_test.mp4" --leg2track Right --backend yolo
+```
+
+Run with Metrabs backend
+```bash
+python src/demo/la_video_analysis.py --video_path "C:/Users/Tahereh/leg_agility_test.mp4" --leg2track Right --backend metrabs
+```
+
+Arguments:
+    ```
+--video_path: Path to the input leg-agility video file
+--leg2track: Which leg to analyze (Left or Right)
+--backend: Pose-estimation backend (yolo or metrabs)
+--save_dir: Optional output directory
     ```
 ### 🔹 Part 2: Official Implementation
 #### 🔹 Keypoint Extraction
