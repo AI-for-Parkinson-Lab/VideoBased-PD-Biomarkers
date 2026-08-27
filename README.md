@@ -87,12 +87,12 @@ Script location
 src/demo/la_video_analysis.py
     ```
 
-Run with YOLO backend
+▶️ Run with YOLO backend
 ```bash
 python src/demo/la_video_analysis.py --video_path "src/demo/leg_agility_test.mp4" --leg2track Right --backend yolo
 ```
 
-Run with Metrabs backend
+▶️ Run with Metrabs backend
 ```bash
 python src/demo/la_video_analysis.py --video_path "src/demo/leg_agility_test.mp4" --leg2track Right --backend metrabs
 ```
