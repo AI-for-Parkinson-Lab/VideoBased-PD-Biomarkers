@@ -214,3 +214,8 @@ If you use this repository in your research, please cite:
 ## 📜 License
 
 This project is licensed under the Apache 2.0 License.
+
+
+### 📜 Third-party licenses
+
+This project uses third-party software and models with their respective licenses. Ultralytics YOLO is licensed under AGPL-3.0, MediaPipe is licensed under Apache-2.0, and the MeTRAbs source code is licensed under the MIT License. MeTRAbs pretrained models are provided for non-commercial use only and are subject to the licensing restrictions specified by the MeTRAbs authors.
