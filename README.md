@@ -21,10 +21,6 @@ Radboud University, Donders Institute for Brain, Cognition and Behaviour
 ```
 📁 VideoBased-PD-Biomarkers/
 │
-├── 📁 data/
-│ ├── 📁 raw/ # Raw data and extracted keypoints (.pkl)
-│ └── 📁 processed/ # Processed CSVs and derived feature files
-│
 ├── 📁 src/
 │ └── 📁 demo/
 │ └── 📄 ft_video_analysis.py # demo: finger tapping video → features → plots
@@ -36,6 +32,9 @@ Radboud University, Donders Institute for Brain, Cognition and Behaviour
 │ ├── 📁 training/
 │ │ └── 📄 optimization_training.py # Model training and evaluation scripts
 │ ├── 📄 environment.yml # Conda environment setup
+├── 📁 data/
+│ ├── 📁 raw/ # Raw data and extracted keypoints (.pkl)
+│ └── 📁 processed/ # Processed CSVs and derived feature files
 └── 📘 README.md # Project documentation
 ```
 
